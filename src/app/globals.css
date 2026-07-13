@@ -1,26 +1,157 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-inter);
+  --font-heading: var(--font-playfair);
   --font-mono: var(--font-geist-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+
+  /* Brand-specific tokens, sourced from the Hayden Depot crest logo */
+  --color-cream: var(--cream);
+  --color-espresso: var(--espresso);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-barn-red: var(--barn-red);
+
+  --radius-sm: calc(var(--radius) * 0.5);
+  --radius-md: calc(var(--radius) * 0.75);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.35);
+  --radius-2xl: calc(var(--radius) * 1.7);
+  --radius-3xl: calc(var(--radius) * 2.15);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  /* Pure white background & cards, near-black charcoal text */
+  --background: #ffffff;
+  --foreground: #141414;
+  --card: #ffffff;
+  --card-foreground: #141414;
+  --popover: #ffffff;
+  --popover-foreground: #141414;
+
+  /* True black primary — the single dark anchor color used for buttons,
+     dark sections, and the footer, so every dark surface on the site matches. */
+  --primary: #0a0a0a;
+  --primary-foreground: #ffffff;
+
+  /* Neutral, barely-there warm-gray tint for alternating section backgrounds
+     (kept far lighter than the old cream tone, closer to off-white). */
+  --secondary: #f5f4f2;
+  --secondary-foreground: #141414;
+
+  --muted: #f5f4f2;
+  --muted-foreground: #6b6b68;
+
+  /* Rust-red accent (matches the chatbot/scroll-to-top buttons) — the one warm color left */
+  --accent: #8a2e28;
+  --accent-foreground: #ffffff;
+
+  --destructive: #a5342a;
+  --border: #e6e5e2;
+  --input: #e6e5e2;
+  --ring: #8a2e28;
+
+  --chart-1: #8a2e28;
+  --chart-2: #6b6b68;
+  --chart-3: #a5342a;
+  --chart-4: #0a0a0a;
+  --chart-5: #9a9a96;
+
+  --radius: 1.25rem;
+
+  --sidebar: #ffffff;
+  --sidebar-foreground: #141414;
+  --sidebar-primary: #0a0a0a;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f5f4f2;
+  --sidebar-accent-foreground: #141414;
+  --sidebar-border: #e6e5e2;
+  --sidebar-ring: #8a2e28;
+
+  /* Raw brand palette for direct use (gradients, illustrative accents) */
+  --cream: #f5f4f2;
+  --espresso: #0a0a0a;
+  --gold: #8a2e28;
+  --gold-light: #b8746c;
+  --barn-red: #8a2e28;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  html {
+    @apply font-sans scroll-smooth;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer utilities {
+  .container-xl {
+    @apply mx-auto w-full max-w-[1280px] px-6 md:px-10;
+  }
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  animation: marquee 22s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee {
+    animation: none;
+  }
 }
