@@ -33,13 +33,13 @@ function CategoryCard({ cat }: { cat: (typeof categories)[number] }) {
   return (
     <Link
       href={`/collections?category=${cat.slug}`}
-      className="group relative block w-64 sm:w-72 shrink-0 aspect-4/5 overflow-hidden rounded-[28px] bg-muted ring-1 ring-border/60 transition-all duration-500 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-black/10 hover:ring-black/30"
+      className="group relative block w-64 sm:w-72 lg:w-96 shrink-0 snap-start aspect-4/5 overflow-hidden rounded-[28px] bg-muted ring-1 ring-border/60 transition-all duration-500 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-black/10 hover:ring-black/30"
     >
       <Image
         src={cat.image}
         alt={cat.name}
         fill
-        sizes="288px"
+        sizes="(max-width: 640px) 256px, (max-width: 1024px) 288px, 384px"
         className="object-cover transition-transform duration-700 ease-out group-hover:scale-110"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/15 to-black/5" />
@@ -88,19 +88,15 @@ export function CategoryMarquee() {
         </FadeUp>
       </div>
 
-      <div className="group/marquee relative">
-        <div className="pointer-events-none absolute inset-y-0 left-0 w-16 sm:w-32 bg-gradient-to-r from-background to-transparent z-10" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 w-16 sm:w-32 bg-gradient-to-l from-background to-transparent z-10" />
-        <div className="flex gap-5 sm:gap-6 pl-6 md:pl-10 animate-marquee group-hover/marquee:paused w-max">
+      <div className="container-xl">
+        <div className="flex gap-5 sm:gap-6 overflow-x-auto snap-x snap-mandatory pb-4 -mx-6 px-6 md:mx-0 md:px-0 scrollbar-none">
           {categories.map((cat) => (
             <CategoryCard key={cat.slug} cat={cat} />
           ))}
-          <div aria-hidden="true" className="flex gap-5 sm:gap-6">
-            {categories.map((cat) => (
-              <CategoryCard key={`${cat.slug}-dup`} cat={cat} />
-            ))}
-          </div>
         </div>
+        <p className="text-center text-xs text-muted-foreground mt-2 sm:hidden">
+          Swipe to explore →
+        </p>
       </div>
     </section>
   );

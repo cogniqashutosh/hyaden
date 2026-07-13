@@ -22,7 +22,7 @@ export function ShopByRoom() {
             <Link
               key={item.room}
               href={`/collections?room=${encodeURIComponent(item.room)}`}
-              className="group relative block shrink-0 w-[78%] sm:w-[45%] lg:w-[31%] aspect-4/5 snap-start overflow-hidden rounded-2xl bg-muted"
+              className="group relative block shrink-0 w-[78%] sm:w-[45%] lg:w-[calc((100%-3rem)/3)] aspect-4/5 snap-start overflow-hidden rounded-2xl bg-muted"
             >
               <Image
                 src={item.image}
