@@ -17,6 +17,13 @@ const WELCOME: ChatMessage = {
     "Hi! I'm here to help with anything about Hayden Furniture Depot — hours, delivery, our collections, you name it. What can I help with?",
 };
 
+const SUGGESTIONS = [
+  "Where are you located?",
+  "What are your best sellers?",
+  "What are your store hours?",
+  "Do you offer delivery?",
+];
+
 export function Chatbot() {
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState<ChatMessage[]>([WELCOME]);
@@ -31,9 +38,9 @@ export function Chatbot() {
     });
   }, [messages, loading]);
 
-  async function sendMessage(e?: React.FormEvent) {
+  async function sendMessage(e?: React.FormEvent, override?: string) {
     e?.preventDefault();
-    const text = input.trim();
+    const text = (override ?? input).trim();
     if (!text || loading) return;
 
     const next = [...messages, { role: "user" as const, content: text }];
@@ -133,24 +140,37 @@ export function Chatbot() {
                   <Loader2 className="h-3.5 w-3.5 animate-spin text-muted-foreground" />
                 </div>
               )}
+              {messages.length === 1 && !loading && (
+                <div className="flex flex-col items-start gap-2">
+                  {SUGGESTIONS.map((s) => (
+                    <button
+                      key={s}
+                      onClick={() => sendMessage(undefined, s)}
+                      className="rounded-full border border-border bg-background px-3 py-1.5 text-xs font-medium text-foreground/80 hover:border-barn-red hover:text-barn-red transition-colors"
+                    >
+                      {s}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
 
             <form
               onSubmit={sendMessage}
-              className="flex shrink-0 items-center gap-2 border-t border-border p-3"
+              className="flex shrink-0 items-center gap-2 border-t border-border px-4 py-4"
             >
               <Input
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
                 placeholder="Ask us anything..."
                 aria-label="Chat message"
-                className="rounded-full"
+                className="h-11 rounded-full px-4"
                 disabled={loading}
               />
               <Button
                 type="submit"
                 size="icon"
-                className="rounded-full shrink-0"
+                className="h-11 w-11 rounded-full shrink-0"
                 disabled={loading || !input.trim()}
                 aria-label="Send message"
               >
